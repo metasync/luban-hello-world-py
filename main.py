@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 import sys
+from version import __version__
 
 app = FastAPI()
 
@@ -7,7 +8,8 @@ app = FastAPI()
 def read_root():
     return {
         "message": "Hello from Luban CI Sample App!",
-        "python_version": sys.version
+        "python_version": sys.version,
+        "version": __version__,
     }
 
 if __name__ == "__main__":
