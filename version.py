@@ -1,5 +1,5 @@
 import importlib.metadata
-import re
+import tomllib
 from pathlib import Path
 
 
@@ -10,18 +10,14 @@ def get_version() -> str:
     except importlib.metadata.PackageNotFoundError:
         pass
 
-    # 2. Fallback: Read from pyproject.toml using regex (to support older Python without tomllib)
+    # 2. Fallback: Read from pyproject.toml (for local development)
+    # Since we require Python >= 3.12, tomllib is always available
     try:
         pyproject_path = Path(__file__).parent / "pyproject.toml"
         if pyproject_path.exists():
-            content = pyproject_path.read_text(encoding="utf-8")
-            # Look for version = "..." under [project]
-            # This is a simplified parser but works for standard pyproject.toml
-            project_section = re.search(r'\[project\](.*?)(?=\n\[|$)', content, re.DOTALL)
-            if project_section:
-                version_match = re.search(r'^version\s*=\s*["\']([^"\']+)["\']', project_section.group(1), re.MULTILINE)
-                if version_match:
-                    return version_match.group(1)
+            with pyproject_path.open("rb") as f:
+                data = tomllib.load(f)
+                return data.get("project", {}).get("version", "0.0.0")
     except Exception:
         pass
 
