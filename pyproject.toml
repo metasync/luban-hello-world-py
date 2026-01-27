@@ -1,6 +1,6 @@
 [project]
 name = "luban-hello-world-py"
-dynamic = ["version"]
+version = "0.1.0"
 description = "A sample Python app for Luban CI testing"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -10,17 +10,8 @@ dependencies = [
 ]
 
 [build-system]
-requires = ["hatchling", "hatch-vcs"]
+requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[tool.hatch.version]
-source = "vcs"
-
-[tool.hatch.version.raw-options]
-fallback_version = "0.1.0"
-
-[tool.hatch.build.hooks.vcs]
-version-file = "_version.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["."]
