@@ -13,7 +13,8 @@ def get_version() -> str:
     # 2. Fallback: Read from pyproject.toml (for local development)
     # Since we require Python >= 3.12, tomllib is always available
     try:
-        pyproject_path = Path(__file__).parent / "pyproject.toml"
+        # pyproject.toml is 2 levels up from src/luban_hello_world_py/
+        pyproject_path = Path(__file__).parent.parent.parent / "pyproject.toml"
         if pyproject_path.exists():
             with pyproject_path.open("rb") as f:
                 data = tomllib.load(f)
