@@ -8,7 +8,7 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    greeting = os.environ.get("GREETING", "Hello")
+    greeting = os.environ.get("GREETING", "Hi")
     return {
         "message": f"{greeting} from Luban CI Sample App!",
         "python_version": sys.version,
